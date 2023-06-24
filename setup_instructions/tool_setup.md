@@ -21,11 +21,12 @@ demonstration
 - [Node](#installing-node)
 - [Typescript](#installing-typescript)
 - [Java (GraalVM JDK)](#installing-java)
-- [Rancher Desktop](#installing-rancher-desktop)
-- [k3d](#installing-k3d)
-- k9s (https://k9scli.io/)
+- [Rancher Desktop](#installing-rancher-desktop) or [k3d](#installing-k3d)
+- [Container Registry](tools/container_registry)
 - [Knative cli](tools/knative_cli.md)
 
+## Optional
+- k9s (https://k9scli.io/)
 
 
 
