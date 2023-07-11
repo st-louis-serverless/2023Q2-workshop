@@ -877,7 +877,7 @@ As a final step, let's delete the Lab1 cluster:
 kind delete cluster -n stls-knative-workshop
 ```
 
-Verify the `kind` container is gone, but notice the registry container is still running:
+Verify the `kind` container is gone, but the registry container may still be running:
 ```shell
 docker ps -a
 ```
@@ -886,7 +886,7 @@ CONTAINER ID   IMAGE        COMMAND                  CREATED       STATUS       
 74bedb122e9a   registry:2   "/entrypoint.sh /etc…"   2 hours ago   Up About an hour   127.0.0.1:5001->5000/tcp   kind-registry
 ```
 
-(We'll use the registry, so don't bother cleaning it up now.)
+If so, clean it up with Docker commands.
 
 ## Coming up
 

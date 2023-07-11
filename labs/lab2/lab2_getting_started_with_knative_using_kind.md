@@ -73,6 +73,7 @@ Have a nice day! 👋
 🚀 Knative install took: 2m10s 
 🎉 Now have some fun with Serverless and Event Driven Apps!
 ```
+> Note: If this seems to hang, try restarting Docker
 
 Verify it with:
 ```shell

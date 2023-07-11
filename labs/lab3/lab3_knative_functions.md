@@ -225,13 +225,13 @@ Now, we'll run our function.
 > of time, so be prepared to wait a bit.
 
 ```shell
-func run --build --path functions/node/hello-http --registry localhost:5001
+func run --build --path functions/node/hello-http --registry localhost:5001/my-repo
 ```
 After what seems like a long time, 
 ```text
-   🙌 Function image built: localhost:5001/hello-http/hello-http:latest
+🙌 Function image built: localhost:5001/my-repo/hello-http:latest
 Function started on port 8080
-{"level":30,"time":1688962702804,"pid":40,"hostname":"d9392f991dd1","node_version":"v18.16.1","msg":"Server listening at http://[::]:8080"}
+{"level":30,"time":1689100207392,"pid":39,"hostname":"37711d8adb64","node_version":"v18.16.1","msg":"Server listening at http://[::]:8080"}
 ```
 
 Notice the `msg` field in that last line: `Server listening at http://[::]:8080`.
@@ -264,21 +264,21 @@ Let's check docker:
 docker ps
 ```
 ```text
-CONTAINER ID   IMAGE                             COMMAND                  CREATED          STATUS          PORTS                                                NAMES
-cd83015b2e55   localhost:5001/hello-http:latest  "/cnb/process/web"       39 seconds ago   Up 38 seconds   127.0.0.1:8080->8080/tcp                             sleepy_brown
-74bedb122e9a   registry:2                        "/entrypoint.sh /etc…"   33 minutes ago   Up 2 minutes    127.0.0.1:5001->5000/tcp                             kind-registry
-e4e8120c3b66   kindest/node:v1.25.3              "/usr/local/bin/entr…"   48 minutes ago   Up 48 minutes   127.0.0.1:51351->6443/tcp, 127.0.0.1:80->31080/tcp   knative-control-plane
+CONTAINER ID   IMAGE                                      COMMAND                  CREATED              STATUS              PORTS                                                NAMES
+37711d8adb64   localhost:5001/my-repo/hello-http:latest   "/cnb/process/web"       About a minute ago   Up About a minute   127.0.0.1:8080->8080/tcp                             crazy_almeida
+3e7a13fbb710   kindest/node:v1.25.3                       "/usr/local/bin/entr…"   21 minutes ago       Up 21 minutes       127.0.0.1:56821->6443/tcp, 127.0.0.1:80->31080/tcp   knative-control-plane
+97350c01d213   registry:2                                 "/entrypoint.sh /etc…"   21 minutes ago       Up 21 minutes       127.0.0.1:5001->5000/tcp                             kind-registry
 ```
 
 Let's stop it:
 
 ```shell
-docker stop sleepy_brown
+docker stop crazy_almeida
 ```
 
 Let's tag it:
 ```shell
-docker tag localhost:5001/hello-http:latest localhost:5001/hello-http:1.0
+docker tag localhost:5001/my-repo/hello-http:latest localhost:5001/my-repo/hello-http:1.0
 ```
 
 ### Step 6 - Deploy it
@@ -288,12 +288,12 @@ We see it's working and in our local Docker repo. (It's not yet pushed to Docker
 Let's rebuild and deploy it with a tag.
 
 ```shell
-func deploy --image localhost:5001/hello-http:1.0 --path functions/node/hello-http
+func deploy --image localhost:5001/my-repo/hello-http:1.0 --path functions/node/hello-http
 ```
 ```text
-⬆️  Deploying function to the cluster
-W0709 23:29:30.741497   74864 warnings.go:70] Kubernetes default value is insecure, Knative may default this to secure in a future release: spec.template.spec.containers[0].securityContext.allowPrivilegeEscalation, spec.template.spec.containers[0].securityContext.cap
-   ✅ Function updated in namespace "default" and exposed at URL: 
+🕖 ⬆️  Deploying function to the cluster
+W0711 13:32:29.365381   41547 warnings.go:70] Kubernetes default value is insecure, Knative may default this to secure in a future release: spec.template.spec.containers[0].securityContext.allowPrivilegeEscalation, spec.template.spec.containers[0].securityContext.capabilities, spec.template.spec.containers[0].securityContext.runAsNonRoot, spec.template.spec.contai
+   ✅ Function deployed in namespace "default" and exposed at URL: 
    http://hello-http.default.127.0.0.1.sslip.io   
 ```
 
@@ -337,10 +337,6 @@ Received response
 ```
 
 The `func invoke` seems to be quite slow for reasons that aren't clear.
-
-```shell
-kubectl apply -f domain-mapping.yaml
-```
 
 ### Step 8 - Clean up
 
