@@ -146,7 +146,7 @@ docker tag hello-stls:latest stlserverless/hello-stls:latest
 
 Login to Docker (if not already):
 ```shell
-docker login -u stlserverless
+docker login -u stlserverless -p $STLS_PAT
 ```
 
 If all is well, push it to the local registry:
