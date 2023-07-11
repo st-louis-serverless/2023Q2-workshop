@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: team1-nginx
+  name: team1-nginx
+  namespace: stls-workshop
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: team1-nginx
+  template:
+    metadata:
+      labels:
+        app: team1-nginx
+    spec:
+      containers:
+      - image: nginx
+        name: nginx

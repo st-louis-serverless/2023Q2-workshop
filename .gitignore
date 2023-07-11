@@ -1,0 +1,9 @@
+.idea
+
+# Ignore Gradle build output directory
+build
+
+labs/lab3/functions/
+
+**/bin/
+**/node_modules/

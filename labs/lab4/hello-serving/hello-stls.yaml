@@ -1,0 +1,29 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: hello-stls
+  namespace: default
+spec:
+  template:
+    metadata:
+      annotations:
+        # We'll set the autoscaling dynamically using kn service update, but you do it here
+        # autoscaling.knative.dev/minScale: "1"
+        # autoscaling.knative.dev/maxScale: "10"
+    spec:
+      # Basically, how many concurrent requests can this service handle?
+      # The default value is 0, meaning that there is no limit on the number of requests
+      # that are allowed to flow into the revision. A value greater than 0 specifies the
+      # exact number of requests that are allowed to flow to the replica at any one time.
+      # For demoing autoscaling, I'll set it to some non-zero value
+      containerConcurrency: 10
+      containers:
+        # I had an issue with the registry at localhost:5001, so switched to a
+        # public repo on Docker Hub
+        - image: stlserverless/hello-stls:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          env:
+            - name: TARGET
+              value: "STLS"
