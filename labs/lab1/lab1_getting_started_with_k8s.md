@@ -1,4 +1,4 @@
-# Getting Started with ks3 / k8s
+# Getting Started with k8s
 
 ## Prerequisites
 

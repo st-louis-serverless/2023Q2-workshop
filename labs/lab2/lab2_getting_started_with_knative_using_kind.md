@@ -5,9 +5,7 @@ Knative offers three capabilities:
 - Knative Serving
 - Knative Eventing
 
-I wish I could say installing Knative is a trivial task. It is not. See the 
-[docs](lab2_getting_started_with_knative_with_k3d.md) for details steps using `k3d`. 
-Be prepared for some DNS issues though.
+I wish I could say installing Knative is a trivial task. It is not.
 
 For this workshop, we'll use the Knative Quickstart to install the Knative capabilities, but first, 
 we'll need a new cluster since we deleted the one we used in Lab 1.
